@@ -23,7 +23,7 @@ jobs:
       - name: Start app
         env:
           PLOOMBER_CLOUD_KEY: ${{ secrets.PLOOMBER_API_KEY }}
-        run: ploomber-cloud start --project-id delicate-flower-8326
+        run: ploomber-cloud watch --project-id delicate-flower-8326
 
       - name: Show responses
         run: echo "App started successfully!"
