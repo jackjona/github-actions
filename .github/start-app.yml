@@ -1,0 +1,30 @@
+name: Start App
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Runs every 5 minutes
+  workflow_dispatch:  # Allows manual execution
+
+jobs:
+  start-app:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install ploomber-cloud
+
+      - name: Start app
+        env:
+          PLOOMBER_CLOUD_KEY: ${{ secrets.PLOOMBER_API_KEY }}
+          PLOOMBER_PROJECT_ID: ${{ secrets.PLOOMBER_PROJECT_ID }}
+        run: ploomber-cloud start --project-id $PLOOMBER_PROJECT_ID
+
+      - name: Show responses
+        run: echo "App started successfully!"
